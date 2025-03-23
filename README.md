@@ -22,3 +22,10 @@ Net network, which has been evaluated on five public datasets,
 performs the most advanced models, demonstrating exceptional
  segmentation capabilities, thus confirming that MDI-Net is a
  powerful solution for medical image segmentation.
+
+# Experiment
+In the experimental section, four publicly available and widely utilized datasets are employed for testing purposes. These datasets are:
+ISIC-2018 (dermoscopy, 2,594 images fortraining, 100 images for validation, and 1,000 images for testing))
+Kvasir-SEG ((gastrointestinal polyp, 600 images for training, 200images for validation, and 200 images for testing)
+BUSI ((breast ultrasound, 399 images for training.113 images for validation, and 118 images for testing)
+CVC-ClinicDB (colorectal cancer, 367 images for training, 123images for validation, and 122 images for testing)
