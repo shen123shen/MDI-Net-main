@@ -103,7 +103,7 @@ def train(train_loader, model, optimizer, epoch, test_path):
     global dict_plot
 
 
-def test(test_loader, model, optimizer, epoch):
+def val(test_loader, model, optimizer, epoch):
     model.eval()
     # 创建一个空列表，用于存储每个批次的损失值。
     loss_list = []
@@ -184,7 +184,7 @@ def train_and_evaluate(model, epochs=50):
     for epoch in range(1, epochs + 1):
         print(f"Epoch {epoch} started at {datetime.now()}")
         train(train_loader, model, optimizer, epoch, opt.test_path)
-        dice = test(test_loader, model, optimizer, epoch)
+        dice = val(test_loader, model, optimizer, epoch)
 
         # 更新最好的三个模型
         if dice > best_dice:
