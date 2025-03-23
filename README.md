@@ -36,16 +36,16 @@ CVC-ClinicDB (colorectal cancer, 367 images for training, 123images for validati
 The dataset path may look like:
 
 /The Dataset Path/
-|── ISIC-2018/
-||── Train_Folder/
-|||── img
-|||── labelcol
-|├── Val_Folder/
-|||── img
-|||── labelcol
-||── Test_Folder/
-|||── img
-|||── labelcol
+├── ISIC-2018/
+│ ├── Train_Folder/
+│ │ ├── img
+│ │ ├── labelcol
+│ ├── Val_Folder/
+│ │ ├── img
+│ │ ├── labelcol
+│ ├── Test_Folder/
+│ ├── img
+│ ├── labelcol
 
  # Usage
  Installation
