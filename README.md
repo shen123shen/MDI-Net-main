@@ -32,7 +32,7 @@ Kvasir-SEG (gastrointestinal polyp, 600 images for training, 200images for valid
 
 BUSI (breast ultrasound, 399 images for training.113 images for validation, and 118 images for testing)
 
-CVC-ClinicDB (colorectal cancer, 367 images for training, 123images for validation, and 122 images for testing)
+CVC-ClinicDB (colorectal cancer, 367 images for training, 123images for validation, and 122 images for testing)\
 The dataset path may look like:
 ```
 /The Dataset Path/
@@ -52,9 +52,17 @@ The dataset path may look like:
  # Usage
  Installation
  ```
- git clone git@github.com:shen123shen/MDI-Net-main
+ git clone git@github.com:shen123shen/MDI-Net-main.git
  MDI-Net-main.git
  conda create -n cfseg python=3.8
  conda activate cfseg
  conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
+Training
+ ```
+python train_cuda.py
+ ```
+Evaluation
+ ```
+python Test.py
+ ```
