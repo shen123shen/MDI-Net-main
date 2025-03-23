@@ -49,8 +49,8 @@ The dataset path may look like:
  Installation
  ```
  git clone git@github.com:shen123shen/MDI-Net-main.git
- conda create -n cfseg python=3.8
- conda activate cfseg
+ conda create -n shen python=3.8
+ conda activate shen
  conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
 Training
