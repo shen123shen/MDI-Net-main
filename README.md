@@ -33,9 +33,9 @@ Kvasir-SEG (gastrointestinal polyp, 600 images for training, 200images for valid
 BUSI (breast ultrasound, 399 images for training.113 images for validation, and 118 images for testing)
 
 CVC-ClinicDB (colorectal cancer, 367 images for training, 123images for validation, and 122 images for testing)
-The dataset path may look like:
-'''
-/The Dataset Path\
+The dataset path may look like:\
+
+`/The Dataset Path\
  ├── ISIC-2018\
   │ ├── Train_Folder\
    │ │ ├── img\
@@ -45,8 +45,8 @@ The dataset path may look like:
    │ │ ├── labelcol\
   │ ├── Test_Folder\
    │ │ ├── img\
-   │ │ ├── labelcol\
-'''
+   │ │ ├── labelcol\`
+
  # Usage
  Installation
  
