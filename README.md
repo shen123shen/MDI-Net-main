@@ -66,7 +66,7 @@ python Test.py
  ```
 @ARTICLE{40030292,
   author  = {Haozhou Shen, Shiren Li, Fizza Ghulam Nabi, Maksim Davydov, Nasir Abbas, Donglin Wang, Guangguang Yang},
-  journal = {The Vision Computer}
+  journal = {Computer Vision and Image Understanding}
   title   = {Enhancing Medical Image Segmentation: Multilayer Feature Aggregation and Decoder-Guided Interaction in U-shaped Models},
   year    = {2025}
 }
