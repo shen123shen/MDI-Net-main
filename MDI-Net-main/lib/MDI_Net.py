@@ -5,7 +5,6 @@ from InceptionNext import inceptionnext_tiny
 
 up_kwargs = {'mode': 'bilinear', 'align_corners': False}
 
-# 仅保留基础小模块，MLFA 完全不封装
 class BasicConv2d(nn.Module):
     def __init__(self, in_planes, out_planes, kernel_size, stride=1, padding=0, dilation=1):
         super(BasicConv2d, self).__init__()
