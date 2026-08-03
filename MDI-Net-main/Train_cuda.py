@@ -19,7 +19,7 @@ from sklearn.metrics import confusion_matrix
 
 
 import random
-# ==================== 固定参数和函数 ====================
+
 
 def structure_loss(pred, mask):
     weit = 1 + 5 * torch.abs(F.avg_pool2d(mask, kernel_size=31, stride=1, padding=15) - mask)
@@ -102,7 +102,7 @@ def test(test_loader, model, optimizer, epoch):
     return f1_or_dsc
 
 
-# ==================== 全局变量（仅保存最优） ====================
+
 best_dice = 0.0
 best_epoch = 0
 best_model_state = None
@@ -110,7 +110,6 @@ counter = 0
 
 
 def save_best_model(model_state_dict, epoch, dice, save_dir):
-    """仅保存全局最优模型为 best.pth，每次刷新覆盖"""
     if model_state_dict is not None:
         save_path = os.path.join(save_dir, "best.pth")
         torch.save(copy.deepcopy(model_state_dict), save_path)
@@ -123,13 +122,12 @@ def save_best_model(model_state_dict, epoch, dice, save_dir):
 def train_and_evaluate(model, scheduler, optimizer, train_loader, test_loader, epochs, seed, opt):
     global best_dice, best_epoch, best_model_state, counter
 
-    # 重置最优记录
     best_dice = 0.0
     best_epoch = 0
     best_model_state = None
     counter = 0
 
-    # 固定随机种子
+
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -139,7 +137,7 @@ def train_and_evaluate(model, scheduler, optimizer, train_loader, test_loader, e
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-    # 创建保存目录
+
     save_dir = opt.train_save
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -150,31 +148,27 @@ def train_and_evaluate(model, scheduler, optimizer, train_loader, test_loader, e
         dice = test(test_loader, model, optimizer, epoch)
         scheduler.step()
 
-        # 判定当前是否为全局最优
         if dice > best_dice:
             best_dice = dice
             best_epoch = epoch
             best_model_state = copy.deepcopy(model.state_dict())
             save_best_model(best_model_state, epoch, dice, save_dir)
-            counter = 0  # 最优更新，重置早停计数
+            counter = 0  
         else:
             counter += 1
             log_info = f'val_dice not improved, patience count: {counter}'
             print(log_info)
             logging.info(log_info)
 
-        # 早停触发
         if counter > 100:
             logging.info('Early stopping triggered, exit training loop')
             break
-
-        # 每10轮打印当前最优信息
+ 
         if epoch % 10 == 0:
             log_info = f"Current global best dice: {best_dice:.4f}, achieved at epoch {best_epoch}"
             print(log_info)
             logging.info(log_info)
 
-    # 训练结束，加载最优权重返回
     if best_model_state is not None:
         model.load_state_dict(best_model_state)
         print(f"Training finished, loaded best checkpoint (epoch {best_epoch}, dice={best_dice:.4f})")
@@ -183,7 +177,6 @@ def train_and_evaluate(model, scheduler, optimizer, train_loader, test_loader, e
     return best_dice
 
 
-# ==================== 主程序 ====================
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--epoch', type=int, default=1000, help='epoch number')
@@ -199,7 +192,6 @@ if __name__ == '__main__':
     parser.add_argument('--train_save', type=str, default='/home/ta/Project/SwinPA-Sparse/result/Kvasir/MDI_Net/')
     opt = parser.parse_args()
 
-    # 日志配置
     logging.basicConfig(filename='/home/ta/Project/SwinPA-Sparse/log/Kvasir/MDI_Net.log',
                         format='[%(asctime)s-%(filename)s-%(levelname)s:%(message)s]',
                         level=logging.INFO, filemode='a', datefmt='%Y-%m-%d %I:%M:%S %p')
@@ -208,7 +200,6 @@ if __name__ == '__main__':
     torch.cuda.set_device(opt.gpu_id)
     FIXED_SEED = 42
 
-    # 模型、优化器、调度器初始化
     model = MDI_Net().cuda()
     params = model.parameters()
     if opt.optimizer == 'AdamW':
@@ -217,14 +208,12 @@ if __name__ == '__main__':
         optimizer = torch.optim.SGD(params, opt.lr, weight_decay=1e-4, momentum=0.9)
     scheduler = CosineAnnealingWarmRestarts(optimizer, T_0=5, T_mult=2)
 
-    # 训练集加载
     image_root = '{}/img/'.format(opt.train_path)
     gt_root = '{}/labelcol/'.format(opt.train_path)
     train_loader = get_loader(image_root, gt_root, batchsize=opt.batchsize, trainsize=opt.trainsize, augmentation=opt.augmentation)
     global total_step
     total_step = len(train_loader)
 
-    # 测试集加载
     image_test = '{}/img/'.format(opt.test_path)
     gt_test = '{}/labelcol/'.format(opt.test_path)
     test_loader = get_loader(image_test, trainsize=opt.trainsize, batchsize=1, augmentation=False)
